@@ -1,0 +1,40 @@
+body{
+    background-color: #000000;
+}
+@font-face {
+    font-family: "myFirstFont";
+    src: url("/silkscreen/slkscrb.ttf");
+}
+#score{
+    font-size: 70px;
+}
+h1{
+    font-family: myFirstFont;
+    color: #00FF00;
+    font-size: 100px;
+    text-align: center;
+    margin: 10px;
+}
+.oddBox{
+    background-color: #80FF00;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    color: #80FF00;
+}
+.evenBox{
+    background-color: #00FF00;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    color: #00FF00;
+}
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 510px;
+    height: 450px;
+    flex-wrap: wrap;
+    border: 5px solid #FFAA00;
+}
