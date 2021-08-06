@@ -1,5 +1,5 @@
 body{
-    background-color: #000000;
+    background-color: #666666;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,12 +9,12 @@ body{
     src: url("./silkscreen/slkscrb.ttf");
 }
 #score{
-    color: #FFAA00;
+    color: #FF0000;
     font-size: 50px;
 }
 h1{
     font-family: myFirstFont;
-    color: #00FF00;
+    color: black;
     font-size: 100px;
     text-align: center;
     margin: 10px;
@@ -37,11 +37,11 @@ main{
     display: grid;
     grid-template-columns: repeat(15, 30px);
     grid-template-rows: repeat(15, 30px);
-    border: 5px solid lightgray/*#666666*/;
+    border: 5px solid lightgray;
 
     }
 #snake{
-    background-color: #00FF00;
+    background-color: black;
 }
 #apple{
     background-color: #FF0000;
@@ -52,27 +52,26 @@ main{
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    align-items: center;
 }
 #playerName{
     font-size: 50px;
-    color: #FF22AA;
+    color: lightgray;
     padding-right: 40px;
 }
 input{
     border: 0px;
     height: 20px;
-    background-color: #FF22AA;
+    background-color: lightgray;
 }
 .enter{
     border: 0px;
-    height: 23px;
-    background-color: #00FF00;
-    color: black;
+    height: 24px;
+    background-color: black;
+    color: white;
+    margin-bottom: 23px;
 
 }
 .reset{
-    margin-top: 10px;
-    border: 0px;
-    height: 23px;
-    background-color: #FFAA00;
+    display: none;
 }

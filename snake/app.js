@@ -2,13 +2,13 @@ let boardElem = document.querySelector('#board');
 let nameDisplay = document.querySelector('#playerName');
 let resetButton = document.querySelector('.reset');
 let score = document.querySelector('#score');
-let bodyPart;
+let bodyPart = ['hold'];
 let play = 0;
 let selBoard = document.querySelectorAll(".board, .cell");
-
+let stop = false;
+let prevMoves = [];
 
 let initialState = {};
-
 
 function buildInitialState() {
     initialState.player = '';
@@ -51,7 +51,7 @@ function renderState() {
 
     renderScore();
     
-    let bodyPart; 
+    
     
     const tiles = document.querySelectorAll(".board, .cell");
     
@@ -87,22 +87,23 @@ function tick() {
     // this is an incremental change that happens to the state every time you update...
     
     let cells = document.querySelectorAll(".board, .cell");
-    if(initialState.direction === "ArrowRight"){
-        let lastIndex = initialState.snakePositions.length - 1;
-        let nextStep = initialState.snakePositions[lastIndex] + 1;
-        let snakeTail = initialState.snakePositions[0];
-        if(nextStep === initialState.applePosition){
-            initialState.snakePositions.push(nextStep);
-            increaseScore();
+        if(initialState.direction === "ArrowRight" && stop === false){
+            let lastIndex = initialState.snakePositions.length - 1;
+            let nextStep = initialState.snakePositions[lastIndex] + 1;
+            let snakeTail = initialState.snakePositions[0];
+            if(nextStep === initialState.applePosition){
+                initialState.snakePositions.push(nextStep);
+                increaseScore();
+            
+            }
+            else {
+                cells[snakeTail].removeAttribute('id');
+                initialState.snakePositions.splice(0,1);
+                initialState.snakePositions.push(nextStep);
+            }
             
         }
-        else{
-            cells[snakeTail].removeAttribute('id');
-            initialState.snakePositions.splice(0,1);
-            initialState.snakePositions.push(nextStep);
-            }
-        }
-    else if(initialState.direction === "ArrowLeft"){
+    else if(initialState.direction === "ArrowLeft" && stop === false){
         let lastIndex = initialState.snakePositions.length - 1;
         let nextStep = initialState.snakePositions[lastIndex] - 1;
         let snakeTail = initialState.snakePositions[0];
@@ -117,7 +118,7 @@ function tick() {
             initialState.snakePositions.push(nextStep);
         }
     }
-    else if(initialState.direction === "ArrowUp"){
+    else if(initialState.direction === "ArrowUp" && stop === false){
         let lastIndex = initialState.snakePositions.length - 1;
         let nextStep = initialState.snakePositions[lastIndex] - 15;
         let snakeTail = initialState.snakePositions[0];
@@ -132,7 +133,7 @@ function tick() {
             initialState.snakePositions.push(nextStep);
         }
     }
-    else if(initialState.direction === "ArrowDown"){
+    else if(initialState.direction === "ArrowDown"&& stop === false){
         let lastIndex = initialState.snakePositions.length - 1;
         let nextStep = initialState.snakePositions[lastIndex] + 15;
         let snakeTail = initialState.snakePositions[0];
@@ -147,30 +148,45 @@ function tick() {
             initialState.snakePositions.push(nextStep);
         }
     }
+    
     let limit = initialState.snakePositions.length - 1;
     for(let i = 0; i < limit; i++){
         if(initialState.snakePositions[limit] === initialState.snakePositions[i]){
             nameDisplay.innerHTML = `<h1 id="playerName"> You Lose! </h1>`
-            setInterval(tick, 1000/ 0.00000010);
+            stop = true;
+            
         }
+    }
+    if(!bodyPart){
+        nameDisplay.innerHTML = `<h1 id="playerName"> You Lose! </h1>`
+            stop = true;
     }
     renderState()
   }
+
+  
     renderPlayer();
     buildInitialState();
-    renderBoard();
-    setInterval(tick, 1000 / 10);
-  
+    renderBoard();    
+    setInterval(tick, 1000/ 12);
+    
+
     document.addEventListener('keydown', function(event){
-     if(event.code && play === 1){
+     if(event.code === "ArrowRight" && initialState.direction === "ArrowLeft"){
+        initialState.direction = initialState.direction;
+     }
+     else if(event.code === "ArrowLeft" && initialState.direction === "ArrowRight"){
+        initialState.direction = initialState.direction;
+     }
+     else if(event.code === "ArrowUp" && initialState.direction === "ArrowDown"){
+        initialState.direction = initialState.direction;
+     }
+     else if(event.code === "ArrowDown" && initialState.direction === "ArrowUp"){
+        initialState.direction = initialState.direction;
+     }
+     else {
         initialState.direction = event.code;
      }
-    })
-    resetButton.addEventListener('click', function(){
-        resetBoard();
-        renderPlayer();
-        renderState();
-        buildInitialState();
-        renderBoard();
+     prevMoves.push(event.code);
     })
   
